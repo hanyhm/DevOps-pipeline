@@ -113,7 +113,7 @@ kubectl apply -f k8s/grafana-deployment.yaml
 
 - Push changes to the main branch to trigger the CI/CD pipeline.
 - Monitor the GitHub Actions workflow and Jenkins job for deployment status.
-- Access the application via the Kubernetes service IP or domain name.
+- Access the application.
 - View application metrics and performance in Grafana.
 
 ## Monitoring
@@ -149,7 +149,11 @@ docker compose up -d
 ```
 check app at http://localhost:3000
 
-### 4. 
+### 4. Ttrigger CI
+
+Make a change to the source code and watch GitHub Actions workflow to test and update docker images of the application.
+
+<img src="./img/actions.png" alt="Project Diagram" width="700" height="150">
 
 
 This DevOps Pipeline Showcase Project demonstrates the ability to design, implement, and manage
