@@ -10,39 +10,47 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+
     steps:
     - uses: actions/checkout@v4
-    
+   
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22'
-        
+        node-version: '20'  # Changed to 20, as 22 is not yet stable
+       
     - name: Install dependencies and run tests (frontend)
       working-directory: ./frontend
       run: |
         npm ci
         npm test
-        
+       
     - name: Install dependencies and run tests (backend)
       working-directory: ./backend
+      env:
+        MONGODB_URI: mongodb://localhost:27017/vidly_test
       run: |
         npm ci
         npm test
-        
+       
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        
+       
     - name: Build and push frontend image
       uses: docker/build-push-action@v2
       with:
         context: ./frontend
         push: true
         tags: hanyhm1234/vidly-frontend:${{ github.sha }}
-        
+       
     - name: Build and push backend image
       uses: docker/build-push-action@v2
       with:
