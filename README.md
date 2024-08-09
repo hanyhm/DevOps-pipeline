@@ -91,11 +91,78 @@ git clone https://github.com/hanyhm/vidly.git
 - DOCKERHUB_PASSWORD
 ```
 
-### 3. Set up a Kubernetes cluster (you can use Minikube for local testing).
+### 3. Install Required Software:
+a. Install Jenkins:
+```bash
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins
+```
+b. Install Docker:
+```bash
+sudo apt install docker.io
+sudo usermod -aG docker jenkins
+sudo usermod -aG docker $USER
+```
 
-### 4. Install and configure Jenkins:
-- Ensure Jenkins has access to your Kubernetes cluster.
-- Create a Jenkins credential for your kubeconfig file.
+c. Install Minikube:
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+
+d. Install kubectl:
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+### 4. Configure Jenkins:
+a. Open Jenkins in your browser (typically http://localhost:8080)
+b. Install suggested plugins
+c. Create an admin user
+d. Install additional plugins: Docker Pipeline, Kubernetes CLI
+e. Configure Jenkins to use Docker as the build agent
+
+## Set up Jenkins Credentials:
+a. Go to "Manage Jenkins" > "Manage Credentials"
+b. Add Docker Hub credentials (Username with password)
+c. Add GitHub credentials if your repository is private
+
+## Create Jenkins Pipeline:
+a. Click "New Item"
+b. Choose "Pipeline" and give it a name
+c. In the Pipeline section, choose "Pipeline script from SCM"
+d. Set SCM to Git and provide your repository URL
+e. Set the branch to */main
+f. Set the Script Path to "jenkins/Jenkinsfile"
+
+## Configure Minikube for Jenkins:
+a. SSH into your Jenkins server
+b. Switch to the jenkins user: 
+```bash 
+sudo su - jenkins
+```
+c. Start Minikube: 
+```bash 
+minikube start --driver=docker
+```
+d. Stop Minikube:
+```bash
+ minikube stop
+ ```
+
+## Adjust Permissions:
+```bash
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker jenkins
+```
+
+## Restart Jenkins:
+```bash
+sudo systemctl restart jenkins
+```
 
 ### 5. Create a Jenkins job that uses the Jenkinsfile in the repo.
 
