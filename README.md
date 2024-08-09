@@ -125,12 +125,12 @@ c. Create an admin user
 d. Install additional plugins: Docker Pipeline, Kubernetes CLI
 e. Configure Jenkins to use Docker as the build agent
 
-## Set up Jenkins Credentials:
+#### Set up Jenkins Credentials:
 a. Go to "Manage Jenkins" > "Manage Credentials"
 b. Add Docker Hub credentials (Username with password)
 c. Add GitHub credentials if your repository is private
 
-## Create Jenkins Pipeline:
+#### Create Jenkins Pipeline:
 a. Click "New Item"
 b. Choose "Pipeline" and give it a name
 c. In the Pipeline section, choose "Pipeline script from SCM"
@@ -138,7 +138,7 @@ d. Set SCM to Git and provide your repository URL
 e. Set the branch to */main
 f. Set the Script Path to "jenkins/Jenkinsfile"
 
-## Configure Minikube for Jenkins:
+#### Configure Minikube for Jenkins:
 a. SSH into your Jenkins server
 b. Switch to the jenkins user: 
 ```bash 
@@ -153,13 +153,13 @@ d. Stop Minikube:
  minikube stop
  ```
 
-## Adjust Permissions:
+#### Adjust Permissions:
 ```bash
 sudo chmod 666 /var/run/docker.sock
 sudo usermod -aG docker jenkins
 ```
 
-## Restart Jenkins:
+#### Restart Jenkins:
 ```bash
 sudo systemctl restart jenkins
 ```
