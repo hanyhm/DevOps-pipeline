@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vidly-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vidly-frontend
+  template:
+    metadata:
+      labels:
+        app: vidly-frontend
+    spec:
+      containers:
+      - name: vidly-frontend
+        image: hanyhm1234/vidly-frontend:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vidly-frontend
+spec:
+  selector:
+    app: vidly-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
