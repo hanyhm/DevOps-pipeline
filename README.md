@@ -192,39 +192,6 @@ kubectl apply -f k8s/grafana-deployment.yaml
 - Node.js application metrics
 - MongoDB performance metrics
 
-## Commands to test App
-
-### 1. Clone the repository:
-```bash
-git clone https://github.com/hanyhm/vidly.git
-```
-### 2. CD into repo and run test
-```bash
-cd vidly
-cd frontend
-npm test
-cd ..
-cd backend
-npm test
-```
-### 3. Use Docker compose to run app in Docker
-ps. You must have Docker & Docker compose installed on your machine
-
-```bash
-cd vidly
-docker compose up -d
-```
-check app at http://localhost:3000
-
-### 4. Ttrigger CI
-
-Make a change to the source code and watch GitHub Actions workflow to test and update docker images of the application.
-
-<img src="./img/actions.png" alt="Project Diagram" width="700" height="150">
-
-
-This DevOps Pipeline Showcase Project demonstrates the ability to design, implement, and manage
-a modern, cloud-native application lifecycle.
 
 ## Contributing
 
